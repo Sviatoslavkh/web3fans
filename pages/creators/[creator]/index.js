@@ -12,6 +12,7 @@ import Content from 'components/Content'
 import Balance  from 'components/Balance';
 import SwitchNetworkModal from 'components/SwitchNetworkModal';
 import TransactionModal from 'components/TransactionModal'
+import SubscriptionModal from 'components/SubscriptionModal';
 
 
 export default function Creator() {
@@ -21,6 +22,7 @@ export default function Creator() {
   const [loading, setLoaded] = useState(true);
   const [creator, setCreator] = useState(null);
   const [first, setfirst] = useState(true);
+  const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false);
   const { isAuthenticated, chainId, isWeb3Enabled, enableWeb3, account } = useMoralis()
   const contractABI = mainContract.abi
   const contractAddress = mainContract.address
@@ -31,6 +33,14 @@ export default function Creator() {
 
   function showTransactionModal(open){
     setTransactionModalOpen(open)
+  }
+
+  function showSubscriptionModal(){
+    setSubscriptionModalOpen(true)
+  }
+
+  function hideSubscriptionModal(){
+    setSubscriptionModalOpen(false)
   }
   
 
@@ -79,6 +89,7 @@ export default function Creator() {
 
       <div className="min-h-full">
        <SwitchNetworkModal/>
+       {subscriptionModalOpen && creator ? <SubscriptionModal price={creator.subscriptionPrice} open={subscriptionModalOpen} hideSubscriptionModal = {hideSubscriptionModal} creatorAddress={creator.address} showTransactionModal={showTransactionModal}/> : ''}
        <TransactionModal open={transactionModalOpen}/>
         <Navigation authrizationComplete={true} navLinks={[
         { name: 'Creators', href: '/creators', current: false },
@@ -93,8 +104,8 @@ export default function Creator() {
             <main>
               <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 {/* Replace with your content */}
-                <CreatorProfile creator={creator} goToAddContent = {goToAddContent} showTransactionModal={showTransactionModal}/>
-                <Balance showTransactionModal={showTransactionModal}/>
+                <CreatorProfile creator={creator} goToAddContent = {goToAddContent} showTransactionModal={showTransactionModal} showSubscriptionModal={showSubscriptionModal}/>
+                {creator != null ? creator.address.toLocaleLowerCase() == account.toLocaleLowerCase() ? <Balance showTransactionModal={showTransactionModal}/> : '' : '' }
 
                 <h2 className="text-3xl mt-6 font-bold leading-tight text-gray-900">Content list</h2>
                 {data == null ? <Loading/> : data[5].length ==0 ? <ContentEmpty/> : <Content creator ={router.query.creator} contentIDs = {creator!=null ? creator.content : []}/>}

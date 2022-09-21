@@ -1,40 +1,49 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
-import {useChain} from "react-moralis"
+import { useMoralis, useChain, useWeb3Contract, useWeb3ExecuteFunction} from "react-moralis"
+import mainContract from 'constants/Main.json'
+import {Moralis} from 'moralis'
+import SubscriptionButton from 'components/SubscriptionButton';
 
 
 
-export default function SwitchNetworkModal() {
+export default function SubscriptionModal(props) {
   
     const [loading, setLoaded] = useState(true);
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [first, setfirst] = useState(true);
+    const { isAuthenticated, chainId, isWeb3Enabled, enableWeb3, account } = useMoralis()
+    const contractABI = mainContract.abi
+    const contractAddress = mainContract.address
 
-    const { switchNetwork, chainId} = useChain();
+    const { data, error, runContractFunction, isFetching, isLoading } =
+    useWeb3Contract();
 
 
-    const handleSwitch = async() =>{
-        switchNetwork("0x13881")
-      }
-    
 
     useEffect( () => {
-      
       setLoaded(false)
-  
-      if(!loading){
-        if(chainId != null && chainId != "0x13881"){
-            setOpen(true)
-         }else if (chainId == "0x13881"){
-            setOpen(false)
-         }
-      }  
+      setOpen(props.open)
+
+      if(!loading && open && account != null && isAuthenticated && props.price && first){
+        let options = {
+          abi: contractABI,
+          contractAddress: contractAddress,
+          functionName: "getUSDPriceInCoins",
+          params: {
+            usd: props.price
+          },
+        }
+        runContractFunction({params:options})
+        setfirst(false)
+      }
     });
 
 
     return (
 
         <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen} >
+      <Dialog as="div" className="relative z-10" onClose={props.hideSubscriptionModal} >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -62,23 +71,15 @@ export default function SwitchNetworkModal() {
                 <div>
                   <div className="mt-3 text-center sm:mt-5">
                     <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Unsupported chain
+                      You should pay for subscription in MATIC coin
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        Unfortunately, our service is available only on Rinkeby network. Please, swith the network to have an access
+                        The current subscription price is {data != null ? `${Moralis.Units.FromWei(data)}` : '...'} MATIC
                       </p>
+                      {data != null && props.creatorAddress ? <SubscriptionButton creatorAddress={props.creatorAddress} showTransactionModal={props.showTransactionModal} hideSubscriptionModal={props.hideSubscriptionModal} msgValue={Moralis.Units.ETH(Moralis.Units.FromWei(data)*1.01)}/> : ''}
                     </div>
                   </div>
-                </div>
-                <div className="mt-5 sm:mt-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:text-sm"
-                    onClick={handleSwitch}
-                  >
-                    Switch the network
-                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

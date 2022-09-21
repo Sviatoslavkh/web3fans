@@ -3,8 +3,8 @@ import '../styles/globals.css'
 import { MoralisProvider } from "react-moralis";
 import { NotificationProvider } from "web3uikit"
 
-const APP_ID = '8rtPEYWiZ3NkIKHF7itUmrfUKSUoGcFgnHvTFCDp'
-const SERVER_URL = 'https://jixzbrj8jixd.usemoralis.com:2053/server'
+const APP_ID = 'uQPL8J0ugGNNWB5XolYRNbn00Oe5CHtBIF8sTctQ'
+const SERVER_URL = 'https://9oefjqqytuwg.usemoralis.com:2053/server'
 
 function MyApp({ Component, pageProps }) {
     return (

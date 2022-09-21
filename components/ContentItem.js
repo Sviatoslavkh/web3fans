@@ -55,13 +55,13 @@ export default function ContentItem(props) {
 
   if(contentType == 0){
 
-    contentTypeBlock = <span className="block text-base  text-indigo-600 font-semibold tracking-wide uppercase">
+    contentTypeBlock = <span className="block text-base  text-blue-600 font-semibold tracking-wide uppercase">
     Image
   </span>
     
   }else if (contentType == 1){
 
-    contentTypeBlock = <span className="block text-base  text-indigo-600 font-semibold tracking-wide uppercase">
+    contentTypeBlock = <span className="block text-base  text-blue-600 font-semibold tracking-wide uppercase">
     Video
   </span>
     
@@ -149,7 +149,7 @@ export default function ContentItem(props) {
             {description}
           </p>
         </div>
-        <div className="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto">
+        <div className="mt-6 prose prose-blue prose-lg text-gray-500 mx-auto">
           
           <figure>
             <img

@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 
 
 export default function sign(message){
-    var messageBytes = ethers.utils.toUtf8Bytes("balance\n\nId: 8rtPEYWiZ3NkIKHF7itUmrfUKSUoGcFgnHvTFCDp:1663496773937");
+    var messageBytes = ethers.utils.toUtf8Bytes(message);
     var messageBuffer = Buffer.from(messageBytes);
     var preamble = '\x19Ethereum Signed Message:\n' + messageBytes.length;
     var preambleBuffer = Buffer.from(preamble);

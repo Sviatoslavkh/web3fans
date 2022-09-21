@@ -11,7 +11,7 @@ import TransactionModal from 'components/TransactionModal'
 export default function New() {
 
     const router = useRouter()
-    const { isAuthenticated, chainId, isWeb3Enabled, enableWeb3, user } = useMoralis()
+    const { isAuthenticated, chainId, isWeb3Enabled, enableWeb3, user, account } = useMoralis()
     const {
       error,
       isUploading,
@@ -50,7 +50,7 @@ export default function New() {
     
     let hundleRegistration = async (tx) =>{
         await tx.wait(1);
-        let address = await user.get("ethAddress")
+        let address = account
         router.push(`/creators/${address}`)
     }
 
@@ -62,13 +62,13 @@ export default function New() {
                     params: {
                     abi: contractABI,
                     contractAddress: contractAddress,
-                    functionName: "registerAsCreator",
+                    functionName: "updateCreator",
                     params: {
-                        _name: creatorName,
-                        _description: creatorDescription,
-                        _avatar: imageUrl,
-                        _subscriptionPrice: subscriptionPrice
-                    }
+                      _name: creatorName,
+                      _description: creatorDescription,
+                      _avatar: imageUrl,
+                      _subscriptionPrice: subscriptionPrice
+                  }
                     },
                     onSuccess: hundleRegistration,
                     onError: (error) => {
@@ -155,7 +155,7 @@ export default function New() {
                     name="username"
                     id="username"
                     autoComplete="username"
-                    className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                    className="flex-1 block w-full focus:ring-blue-500 focus:border-blue-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
                     onChange={handleNameChange}
                   />
                 </div>
@@ -171,7 +171,7 @@ export default function New() {
                   id="description"
                   name="description"
                   rows={3}
-                  className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                  className="max-w-lg shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 sm:text-sm border border-gray-300 rounded-md"
                   defaultValue={''}
                   onChange={handleDescriptionChange}
                 />
@@ -191,7 +191,7 @@ export default function New() {
                   <FileInput onChange={handleFileChange} />
                   <button
                     type="button"
-                    className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     onClick={openFileDialog}
                   >
                     Change
@@ -217,8 +217,8 @@ export default function New() {
                             name="price"
                             id="price"
                             className={isNaN(parseInt(subscriptionPrice)) == true 
-                                        ? "border-red-500 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm rounded-md" 
-                                        : "focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"}
+                                        ? "border-red-500 focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm rounded-md" 
+                                        : "focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"}
                             placeholder="0"
                             onChange={handlePriceChange}
                             />
@@ -242,13 +242,13 @@ export default function New() {
         <div className="flex justify-end">
           <button
             type="button"
-            className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             Clear
           </button>
           <button
             type="submit"
-            className=" disabled:opacity-20 ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className=" disabled:opacity-20 ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             disabled={!formIsReady}
             onClick={handleSubmit}
           >
