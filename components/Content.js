@@ -99,7 +99,7 @@ export default function Content(props) {
                 />
               </svg>
               <h3 className="mt-2 text-sm font-medium text-gray-900">Subscription is not Active</h3>
-              <p className="mt-1 text-sm text-gray-500">Please, buy a subscrtiption to get an access to creator's content</p>
+              <p className="mt-1 text-sm text-gray-500">{"Please, buy a subscrtiption to get an access to creators content"}</p>
               <div className="mt-6">
               </div>
             </div>

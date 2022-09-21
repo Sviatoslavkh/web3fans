@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router'
-
+import Link from 'next/link'
 
 
 
@@ -39,12 +39,12 @@ export default function Home() {
             </p>
             <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
               <div className="rounded-md shadow">
-                <a
+                <Link
                   href="/creators"
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-700 md:py-4 md:px-10 md:text-lg"
                 >
                   Get started
-                </a>
+                </Link>
               </div>
             </div>
           </div>

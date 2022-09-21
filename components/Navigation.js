@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-
+import Link from 'next/link'
 import { HomeIcon } from '@heroicons/react/solid'
 import Logout from 'components/Logout'
 
@@ -34,10 +34,10 @@ export default function Navigation(props) {
         <ol role="list" className="max-w-screen-xl w-full mx-auto px-4 flex space-x-4 sm:px-6 lg:px-8">
           <li className="flex">
             <div className="flex items-center">
-              <a href="/creators" className="text-gray-400 hover:text-gray-500">
+              <Link href="/creators" className="text-gray-400 hover:text-gray-500">
                 <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
                 <span className="sr-only">Home</span>
-              </a>
+              </Link>
             </div>
           </li>
           {props.navLinks.map((page) => (
