@@ -1,15 +1,16 @@
 import { Disclosure } from '@headlessui/react'
-import Link from 'next/link'
 import { HomeIcon } from '@heroicons/react/solid'
 import Logout from 'components/Logout'
+import { Router, useRouter } from 'next/router'
+import Link from 'next/link'
 
-const pages = [
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Project Nero', href: '#', current: true },
-]
+
 
 
 export default function Navigation(props) {
+  const router = useRouter()
+  
+
 
 
     return (
@@ -34,10 +35,11 @@ export default function Navigation(props) {
         <ol role="list" className="max-w-screen-xl w-full mx-auto px-4 flex space-x-4 sm:px-6 lg:px-8">
           <li className="flex">
             <div className="flex items-center">
-              <Link href="/creators" className="text-gray-400 hover:text-gray-500">
-                <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
-                <span className="sr-only">Home</span>
-              </Link>
+              <div  className="text-gray-400 hover:text-gray-500">
+                <div>
+                <Link href="/creators" className="sr-only">Home</Link>
+                </div>
+              </div>
             </div>
           </li>
           {props.navLinks.map((page) => (
@@ -53,13 +55,14 @@ export default function Navigation(props) {
                 >
                   <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
                 </svg>
-                <a
-                  href={page.href}
+                <Link href={page.href}> 
+                <div
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
                   aria-current={page.current ? 'page' : undefined}
                 >
-                  {page.name}
-                </a>
+                   {page.name}
+                </div>
+                </Link>
               </div>
             </li>
           ))}

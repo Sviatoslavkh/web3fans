@@ -12,8 +12,9 @@ export default function Home() {
 
   const router = useRouter()
   const [loading, setLoaded] = useState(true);
-
-
+  function goToPage(page){
+    router.push(page)
+  }
 
   useEffect( () => {
       
@@ -39,12 +40,11 @@ export default function Home() {
             </p>
             <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
               <div className="rounded-md shadow">
-                <Link
-                  href="/creators"
+                <div
                   className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-700 md:py-4 md:px-10 md:text-lg"
                 >
-                  Get started
-                </Link>
+                <Link href="/creators"> Get started</Link>
+                </div>
               </div>
             </div>
           </div>
