@@ -19,6 +19,7 @@ export default function Content(props) {
   const [creator, setCreator] = useState(null);
   const [first, setfirst] = useState(true);
   const [subscriptionIsActive, setSubscriptionIsActive] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
   const { isAuthenticated, chainId, isWeb3Enabled, enableWeb3, account, user, isLoggingOut } = useMoralis()
   const contractABI = mainContract.abi
   const contractAddress = mainContract.address
@@ -52,6 +53,7 @@ export default function Content(props) {
          if(isWeb3Enabled && isAuthenticated && first && !isLoading && !subscriptionIsActive){
             if(account.toLocaleLowerCase() == props.creator.toLocaleLowerCase()){
               setSubscriptionIsActive(true)
+              setCanEdit(true)
             }else if(account != props.creator && data == null && error == null){
               runContractFunction()
             }
@@ -79,7 +81,7 @@ export default function Content(props) {
           subscriptionIsActive && props.contentIDs
           ?
           props.contentIDs.map((contentID) => (
-            <ContentItem key={Moralis.Units.Token(contentID, "0")} contentID = {Moralis.Units.Token(contentID, "0")}/>
+            <ContentItem key={Moralis.Units.Token(contentID, "0")} contentID = {Moralis.Units.Token(contentID, "0")} canEdit={canEdit}/>
           ))
           :
               <div className="text-center">

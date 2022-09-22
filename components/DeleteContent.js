@@ -8,7 +8,7 @@ import {Moralis} from 'moralis'
 
 
 
-export default function Withdraw(props) {
+export default function DeleteContent(props) {
   
     const [loading, setLoaded] = useState(true);
     const contractABI = mainContract.abi
@@ -29,22 +29,22 @@ export default function Withdraw(props) {
 
     let finishWithdraw = async (tx) =>{
       await tx.wait(1);
-      props.resetbalance()
   }
 
-    const handleWithdraw = async(e) =>{
+    const handleDelete = async(e) =>{
         e.preventDefault();
-        props.showTransactionModal(true)
           await runContractFunction({
             params: {
             abi: contractABI,
             contractAddress: contractAddress,
-            functionName: "creatorWithdraw"
+            functionName: "deleteContent",
+            params: {
+              _contentID: props.contentID
+            }
             },
             onSuccess: finishWithdraw,
             onError: (error) => {
                 console.log(error)
-                props.showTransactionModal(false)
             },
         })
       }
@@ -52,12 +52,12 @@ export default function Withdraw(props) {
 
     return (
         <div>
-        {props.active == true ? <button
+        {props.canEdit == true ? <button
             type="button"
             className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"        
-            onClick={handleWithdraw}
+            onClick={handleDelete}
             >
-            Withdraw
+            Delete content
           </button>
         :
             ''

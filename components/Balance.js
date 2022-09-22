@@ -47,7 +47,7 @@ export default function Balance(props) {
           runContractFunction({params:options})
          }
          if(data && balance == null){
-          setBalance((Moralis.Units.Token(data, "0")))
+          setBalance(Moralis.Units.FromWei(data))
          }
       }  
     });
@@ -57,7 +57,7 @@ export default function Balance(props) {
 
       <div key='balance' className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
         <dt className="truncate text-sm font-medium text-gray-500">Balance</dt>
-        {balance != null ? <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{balance} ETH</dd> : <div className="animate-pulse h-2 bg-slate-200 rounded col-span-2 w-24"></div>}
+        {balance != null ? <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{balance} MATIC</dd> : <div className="animate-pulse h-2 bg-slate-200 rounded col-span-2 w-24"></div>}
         {balance > 0 ? <Withdraw resetbalance= {resetbalance} active={true}  showTransactionModal={props.showTransactionModal}/> : <Withdraw active={false}/>}
       </div>
 

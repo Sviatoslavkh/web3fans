@@ -13,6 +13,7 @@ export default function CreatorsProfile(props) {
   const [subscriptionActive, setSubscriptionActive] = useState(false);
   const [selfContent, setSelfContent] = useState(false);
   const [accountAddress, setAccountAddress] = useState(null);
+  const [subscriptionEndDate, setSubscriptionEndDate] = useState(null);
   const { isAuthenticated, chainId, isWeb3Enabled, enableWeb3, account, user, isLoggingOut } = useMoralis()
   const contractABI = mainContract.abi
   const contractAddress = mainContract.address
@@ -51,7 +52,9 @@ export default function CreatorsProfile(props) {
       setfirst(false)
       }
       if(data != null){
+        let date = new Date(Moralis.Units.Token(data[2], "0") * 1000)
         setSubscriptionActive(data[3])
+        setSubscriptionEndDate(date.toISOString().split('T')[0])
       }
       if(error != null){
         setSubscriptionActive(false)
@@ -89,7 +92,8 @@ export default function CreatorsProfile(props) {
                    : <div className="animate-pulse h-2 bg-slate-200 rounded col-span-2"/>}
                 {subscriptionActive 
                 ? <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            {!selfContent ? 'Active subscription' : 'Your subscription'}
+                            {!selfContent ? 'Active subscription'  : 'Your subscription'}
+                            {subscriptionEndDate != null ? ` (till ${subscriptionEndDate})` : ''}
                           </span>
                 :
                 <span className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800">Subscription not active</span>

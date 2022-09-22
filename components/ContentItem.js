@@ -4,6 +4,7 @@ import { useMoralis, useChain, useWeb3Contract, useWeb3ExecuteFunction} from "re
 import {Moralis} from 'moralis'
 import mainContract from 'constants/Main.json'
 import sign from 'functions/sign'
+import DeleteContent from 'components/DeleteContent'
 
 
 export default function ContentItem(props) {
@@ -144,6 +145,7 @@ export default function ContentItem(props) {
             <span className="mt-2 block text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               {name}
             </span>
+            {props.canEdit && props.contentID ? <DeleteContent contentID={props.contentID} canEdit={props.canEdit}/> : ''}
           </h1>
           <p className="mt-8 text-xl text-gray-500 leading-8">
             {description}
